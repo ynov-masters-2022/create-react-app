@@ -4,11 +4,18 @@ import User from "./User";
 
 const Users = () => {
   const [usersList, setUsersList] = useState(USERS);
-  const [newUserName, setNewUserName] = useState("");
-  const [newUserFirstname, setNewUserFirstname] = useState("");
+  const [newUser, setNewUser] = useState({
+    name: "",
+    firstname: "",
+  });
 
-  const onChangeUserName = (e) => setNewUserName(e.target.value);
-  const onChangeUserFirstName = (e) => setNewUserFirstname(e.target.value);
+  const onChange = (e) => {
+    const newUserNext = {
+      ...newUser,
+      [e.target.name]: e.target.value,
+    };
+    setNewUser(newUserNext);
+  };
 
   const onAddUser = () => {
     const id = Math.max(...usersList.map((u) => u.id)) + 1;
@@ -17,8 +24,8 @@ const Users = () => {
       ...usersList,
       {
         id,
-        name: newUserName,
-        firstname: newUserFirstname,
+        name: newUser.name,
+        firstname: newUser.firstname,
       },
     ];
     setUsersList(newUsers);
@@ -26,11 +33,12 @@ const Users = () => {
 
   return (
     <>
-      <input type="text" value={newUserName} onChange={onChangeUserName} />
+      <input type="text" name="name" value={newUser.name} onChange={onChange} />
       <input
         type="text"
-        value={newUserFirstname}
-        onChange={onChangeUserFirstName}
+        name="firstname"
+        value={newUser.firstname}
+        onChange={onChange}
       />
       <button onClick={onAddUser}>Add User</button>
       <div>
