@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import styles from "./Users.module.scss";
 import USERS from "../data/users";
 import User from "./User";
 
@@ -27,7 +28,7 @@ const Users = () => {
       <input type="text" ref={nameRef} />
       <input type="text" ref={firstnameRef} />
       <button onClick={onAddUser}>Add User</button>
-      <div>
+      <div className={styles.list}>
         {usersList.map((user) => (
           <User name={user.name} firstname={user.firstname} key={user.id} />
         ))}
