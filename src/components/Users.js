@@ -1,13 +1,27 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Users.module.scss";
-import USERS from "../data/users";
 import User from "./User";
+import { getUsers } from "../services/userService";
 
 const Users = () => {
-  const [usersList, setUsersList] = useState(USERS);
+  const [loading, setLoading] = useState(true);
+  const [usersList, setUsersList] = useState(null);
+
+  useEffect(() => {
+    console.log("rendered donc je suis lancé");
+    async function fetchUsers() {
+      setLoading(true);
+      const users = await getUsers();
+      console.log("je sette les users");
+      setUsersList(users);
+      setLoading(false);
+    }
+
+    fetchUsers();
+  }, []);
+
   const nameRef = useRef(null);
   const firstnameRef = useRef(null);
-  console.log("rendering");
 
   const onAddUser = () => {
     const id = Math.max(...usersList.map((u) => u.id)) + 1;
@@ -23,7 +37,7 @@ const Users = () => {
     setUsersList(newUsers);
   };
 
-  return (
+  return !loading ? (
     <>
       <input type="text" ref={nameRef} />
       <input type="text" ref={firstnameRef} />
@@ -34,6 +48,8 @@ const Users = () => {
         ))}
       </div>
     </>
+  ) : (
+    <p>Chargement...</p>
   );
 };
 export default Users;
