@@ -44,7 +44,7 @@ const Users = () => {
       <button onClick={onAddUser}>Add User</button>
       <div className={styles.list}>
         {usersList.map((user) => (
-          <User name={user.name} firstname={user.firstname} key={user.id} />
+          <User user={user} key={user.id} />
         ))}
       </div>
     </>
