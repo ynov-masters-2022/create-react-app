@@ -2,13 +2,17 @@ import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
 const Theme = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, dispatch } = useContext(ThemeContext);
 
-  const switchTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+  const switchTheme = () =>
+    dispatch({
+      type: "SWITCH_THEME",
+      payload: theme.value === "dark" ? "light" : "dark",
+    });
 
   return (
     <div>
-      <h1>Thème : {theme}</h1>
+      <h1>Thème : {theme.value}</h1>
       <div>
         <button onClick={switchTheme}>Switch Theme</button>
       </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.scss";
 import Counter from "./components/Counter";
@@ -8,14 +8,18 @@ import Theme from "./components/Theme";
 import Timer from "./components/Timer";
 import UserDetailsPage from "./components/UserDetailsPage";
 import Users from "./components/Users";
-import { ThemeContext } from "./context/ThemeContext";
+import {
+  initialState,
+  ThemeContext,
+  themeReducer,
+} from "./context/ThemeContext";
 import Layout from "./layout/Layout";
 
 function App() {
-  const [theme, setTheme] = useState("light");
+  const [theme, dispatch] = useReducer(themeReducer, initialState);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, dispatch }}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Users />} />

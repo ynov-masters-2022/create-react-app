@@ -9,7 +9,7 @@ const Layout = () => {
   return (
     <div>
       <h1>Mon super layout</h1>
-      <p>Thème courant : {theme}</p>
+      <p>Thème courant : {theme.value}</p>
       <Nav />
       <Outlet />
     </div>
